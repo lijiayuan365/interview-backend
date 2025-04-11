@@ -17,7 +17,7 @@ describe('HelloWorldService', () => {
   });
 
   it('should handle async operations', async () => {
-    const result = await service.getHello();
+    const result = await service.getHello('');
     expect(result).toBe('Hello World');
   });
 });
