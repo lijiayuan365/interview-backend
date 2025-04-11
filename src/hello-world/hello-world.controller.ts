@@ -1,6 +1,6 @@
 import { Controller, Get, Post, Query, Body } from '@nestjs/common';
 import { HelloWorldService } from './hello-world.service';
-import { ApiOperation, ApiTags, } from '@nestjs/swagger';
+import { ApiOperation, ApiTags, ApiResponse, ApiBody } from '@nestjs/swagger';
 import { HelloRequestDto, HelloResponseDto } from './dto';
 
 
@@ -20,6 +20,15 @@ export class HelloWorldController {
 
   @Post()
   @ApiOperation({ summary: '提交问候语' })
+  @ApiResponse({
+    status: 200,
+    description: '提交问候语成功',
+    type: HelloResponseDto,
+  })
+  @ApiBody({
+    description: '提交问候语请求体',
+    type: HelloRequestDto,
+  })
   async postHello(@Body() body: HelloRequestDto): Promise<HelloResponseDto> {
     return await this.helloWorldService.getHello(body.name);
   }
