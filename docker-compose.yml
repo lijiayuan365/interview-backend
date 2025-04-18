@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: interview-backend
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      # - DATABASE_URL=数据库URL
+      # - REDIS_URL=Redis URL
+    volumes:
+      # 可选：如果需要持久化一些数据，可以添加卷
+      # - ./data:/app/data
+      - ./logs:/app/logs
+    networks:
+      - app-network
+
+# 如果你的应用需要连接数据库或其他服务，可以在这里添加
+#  database:
+#    image: postgres:14-alpine
+#    container_name: interview-db
+#    restart: unless-stopped
+#    environment:
+#      - POSTGRES_USER=postgres
+#      - POSTGRES_PASSWORD=postgres
+#      - POSTGRES_DB=interview
+#    volumes:
+#      - postgres_data:/var/lib/postgresql/data
+#    networks:
+#      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
+# 如果有其他服务使用的卷，可以在这里定义
+#volumes:
+#  postgres_data:
