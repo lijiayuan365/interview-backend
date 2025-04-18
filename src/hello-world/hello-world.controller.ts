@@ -1,14 +1,13 @@
 import { Controller, Get, Post, Query, Body } from '@nestjs/common';
 import { HelloWorldService } from './hello-world.service';
-import { ApiOperation, ApiTags, ApiResponse, ApiBody } from '@nestjs/swagger';
+import { ApiOperation, ApiTags, ApiBody } from '@nestjs/swagger';
 import { HelloRequestDto, HelloResponseDto } from './dto';
 import { ApiResponseDecorator } from '../common/dto/response.dto';
-
 
 @ApiTags('hello-world')
 @Controller('hello-world')
 export class HelloWorldController {
-  constructor(private readonly helloWorldService: HelloWorldService) { }
+  constructor(private readonly helloWorldService: HelloWorldService) {}
 
   @Get()
   @ApiOperation({ summary: '获取问候语' })
@@ -31,4 +30,3 @@ export class HelloWorldController {
     return await this.helloWorldService.getHello(body.name);
   }
 }
-
