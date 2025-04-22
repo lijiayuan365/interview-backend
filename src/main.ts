@@ -7,16 +7,22 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.enableCors({
-    origin: [
-      'http://127.0.0.1:5001',
-      'http://localhost:5001',
-      'http://127.0.0.1:5002',
-      'http://1ocalhost:5002',
-      'http://127.0.0.1:5003',
-      'http://1ocalhost:5003',
-      'http://127.0.0.1:5004',
-      'http://1ocalhost:5004',
-    ],
+    origin: (origin, callback) => {
+      // 允许的域名列表
+      const allowedDomains = ['vercel.app'];
+      // 本地开发支持
+      const allowedLocal = ['http://localhost', 'http://127.0.0.1'];
+      // 检查 origin 是否为空（非浏览器请求）、是否属于允许的域名或本地开发
+      if (
+        !origin ||
+        allowedDomains.some((domain: string) => origin.includes(domain)) ||
+        allowedLocal.some((local: string) => origin.startsWith(local))
+      ) {
+        callback(null, true);
+      } else {
+        callback(new Error('Not allowed by CORS'));
+      }
+    },
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: [
       'Content-Type',
