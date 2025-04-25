@@ -10,11 +10,7 @@ import {
 } from '@nestjs/common';
 import { InitUploadDto, InitUploadResponseDto } from './dto/init-upload.dto';
 import { UploadService } from './upload.service';
-import {
-  ApiOperation,
-  ApiConsumes,
-  ApiParam,
-} from '@nestjs/swagger';
+import { ApiOperation, ApiConsumes, ApiParam } from '@nestjs/swagger';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { Express } from 'express';
 import {
