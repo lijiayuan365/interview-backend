@@ -1,8 +1,12 @@
 # Use the official Node.js image as the base image
-FROM node:20
+FROM --platform=$BUILDPLATFORM node:20-alpine
 
 # Set the working directory inside the container
 WORKDIR /usr/src/app
+
+# Set the build arguments
+ARG BUILDPLATFORM
+ARG TARGETPLATFORM
 
 # Copy package.json and package-lock.json to the working directory
 COPY package*.json ./
